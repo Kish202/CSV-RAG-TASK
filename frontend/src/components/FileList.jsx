@@ -1,21 +1,21 @@
 // src/components/FileList.jsx
 import { useState, useEffect } from 'react';
-import { Trash2, RefreshCw } from 'lucide-react';
-import { 
-  Card, 
-  CardContent, 
-  CardHeader, 
-  CardTitle, 
-  CardDescription 
+import { Trash2, RefreshCw, Loader } from 'lucide-react';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableHead, 
-  TableHeader, 
-  TableRow 
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow
 } from '@/components/ui/table';
 import {
   AlertDialog,
@@ -78,10 +78,10 @@ const FileList = ({ onRefresh, triggerRefresh, className = "" }) => {
           <CardTitle>Your CSV Files</CardTitle>
           <CardDescription>Manage your uploaded CSV files</CardDescription>
         </div>
-        <Button 
-          variant="outline" 
-          size="sm" 
-          onClick={fetchFiles} 
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={fetchFiles}
           disabled={loading}
         >
           <RefreshCw className="h-4 w-4 mr-2" />
@@ -91,14 +91,20 @@ const FileList = ({ onRefresh, triggerRefresh, className = "" }) => {
       <CardContent className="flex-1 overflow-hidden">
         <ScrollArea className="h-[calc(100vh-300px)]">
           {loading ? (
-            <div className="flex justify-center my-4">Loading files...</div>
-          ) : error ? (
-            <div className="text-red-500 my-4">{error}</div>
-          ) : files.length === 0 ? (
-            <div className="text-center py-8 text-gray-500">
-              No CSV files uploaded yet. Upload a file to get started.
-            </div>
-          ) : (
+            <div className="flex flex-col items-center justify-center p-8 text-center">
+              <Loader className="animate-spin text-blue-500 mb-4" size={36} />
+              <h3 className="text-lg font-medium mb-2">Loading your files...</h3>
+              <p className="text-sm text-gray-500 max-w-md">
+                Please wait a moment while we connect to the server.
+                First-time connections may take 20-30 seconds to initialize.
+              </p>
+            </div>) : error ? (
+              <div className="text-red-500 my-4">{error}</div>
+            ) : files.length === 0 ? (
+              <div className="text-center py-8 text-gray-500">
+                No CSV files uploaded yet. Upload a file to get started.
+              </div>
+            ) : (
             <Table>
               <TableHeader>
                 <TableRow>
@@ -115,9 +121,9 @@ const FileList = ({ onRefresh, triggerRefresh, className = "" }) => {
                       {file.file_id}
                     </TableCell>
                     <TableCell className="text-right">
-                      <Button 
-                        variant="destructive" 
-                        size="sm" 
+                      <Button
+                        variant="destructive"
+                        size="sm"
                         onClick={() => setFileToDelete(file)}
                       >
                         <Trash2 className="h-4 w-4" />
@@ -137,14 +143,14 @@ const FileList = ({ onRefresh, triggerRefresh, className = "" }) => {
           <AlertDialogHeader>
             <AlertDialogTitle>Are you sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This will permanently delete the file "{fileToDelete?.file_name}". 
+              This will permanently delete the file "{fileToDelete?.file_name}".
               This action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction 
-              className="bg-red-500 hover:bg-red-600" 
+            <AlertDialogAction
+              className="bg-red-500 hover:bg-red-600"
               onClick={() => handleDeleteFile(fileToDelete?.file_id)}
             >
               Delete

@@ -64,7 +64,7 @@ const FileUpload = ({ onFileUploaded }) => {
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 cursor-pointer">
             <Input
               id="csvFile"
               type="file"

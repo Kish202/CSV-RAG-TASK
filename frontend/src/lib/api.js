@@ -1,5 +1,5 @@
 // src/lib/api.js
-const API_URL ='https://rag-server-51ls.onrender.com';
+const API_URL ='http://localhost:8000';
 
 /**
  * API client for CSV RAG Backend
